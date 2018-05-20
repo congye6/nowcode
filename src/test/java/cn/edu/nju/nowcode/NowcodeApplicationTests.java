@@ -1,4 +1,4 @@
-package cn.edu.nju;
+package cn.edu.nju.nowcode;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
