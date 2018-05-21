@@ -1,8 +1,11 @@
 package cn.edu.nju.nowcode.interceptor;
 
 import cn.edu.nju.nowcode.service.LoginTicketService;
+import cn.edu.nju.nowcode.service.UserContext;
+import cn.edu.nju.nowcode.service.UserService;
 import cn.edu.nju.nowcode.util.CookieUtil;
 import cn.edu.nju.nowcode.vo.TicketVO;
+import cn.edu.nju.nowcode.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -23,24 +26,40 @@ public class TicketCheckInterceptor implements HandlerInterceptor{
     @Autowired
     private LoginTicketService ticketService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserContext userContext;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String ticket= CookieUtil.getCookie(request,CookieUtil.LOGIN_TICKET);
         TicketVO ticketVO=ticketService.getTicket(ticket);
         if(!ticketService.isValidTicket(ticketVO)){
             response.sendRedirect("/login/page");
+            return false;
         }
+
+        UserVO userVO=userService.getUserById(ticketVO.getUserId());
+        if(userVO==null){
+            response.sendRedirect("/login/page");
+            return false;
+        }
+
+        userContext.setUser(userVO);
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable ModelAndView modelAndView) throws Exception {
-
+        if(modelAndView!=null)
+            modelAndView.addObject("user",userContext.getUser());
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
-
+        userContext.clear();
     }
 
 

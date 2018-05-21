@@ -57,6 +57,7 @@ public class LoginController {
     public ResponseVO logout(HttpServletRequest request){
         String ticket=CookieUtil.getCookie(request,CookieUtil.LOGIN_TICKET);
         ticketService.invalidTicket(ticket);
+        return ResponseVO.buildSuccess();
     }
 
     /**

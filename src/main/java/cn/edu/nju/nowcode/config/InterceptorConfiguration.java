@@ -18,8 +18,8 @@ public class InterceptorConfiguration extends WebMvcConfigurerAdapter{
         // 多个拦截器组成一个拦截器链
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
-        registry.addInterceptor(getTicketInteceptor()).excludePathPatterns("/login/page","/login","/register",
-                "/images/*","/scripts/*","/styles/*");
+        registry.addInterceptor(getTicketInteceptor()).excludePathPatterns("/login/page","/login","/register","/error",
+                "/images/**","/scripts/**","/styles/**");
         super.addInterceptors(registry);
     }
 
