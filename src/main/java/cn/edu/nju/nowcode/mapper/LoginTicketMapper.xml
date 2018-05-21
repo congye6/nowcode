@@ -19,6 +19,13 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
 
+  <select id="selectByTicketId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from login_ticket
+    where ticket = #{ticket}
+  </select>
+
   <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
     SELECT * FROM login_ticket where user_id=#{userId}
   </select>

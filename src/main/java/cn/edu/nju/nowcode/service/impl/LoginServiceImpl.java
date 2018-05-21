@@ -32,7 +32,7 @@ public class LoginServiceImpl implements LoginService{
         userVO.setSalt(UUIDUtil.uuid());
         userVO.setPassword(SecurityUtil.md5(userVO.getPassword(),userVO.getSalt()));
         userService.addUser(userVO);
-        return responseVO;
+        return ResponseVO.buildSuccess(userVO);
     }
 
     @Override

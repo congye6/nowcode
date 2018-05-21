@@ -28,6 +28,9 @@
     where username = #{username}
   </select>
   <insert id="insertSelective" parameterType="cn.edu.nju.nowcode.vo.UserVO">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

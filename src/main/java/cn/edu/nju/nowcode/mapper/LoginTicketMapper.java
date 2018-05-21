@@ -10,6 +10,8 @@ public interface LoginTicketMapper {
 
     TicketVO selectByUserId(Long userId);
 
+    TicketVO selectByTicketId(String ticketId);
+
     TicketVO selectByPrimaryKey(Long id);
 
     int updateByTicket(TicketVO record);

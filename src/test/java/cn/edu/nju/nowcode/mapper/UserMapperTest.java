@@ -26,12 +26,13 @@ public class UserMapperTest {
 
     @Test
     public void addUser(){
-        /*UserVO userVO=new UserVO();
+        UserVO userVO=new UserVO();
         userVO.setUsername("congye6");
         userVO.setPassword("666");
         userVO.setHeadUrl("http://local");
         userVO.setSalt("hhh");
-        mapper.insertSelective(userVO);*/
+        mapper.insertSelective(userVO);
+        System.out.println(userVO.getId());
     }
 
     @Test
