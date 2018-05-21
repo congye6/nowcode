@@ -33,8 +33,11 @@ public class LoginController {
     private LoginTicketService ticketService;
 
     @RequestMapping(value="/login/page",method = RequestMethod.GET)
-    public String loginPage(){
-        return "login";
+    public ModelAndView loginPage(String next){
+        ModelAndView modelAndView=new ModelAndView();
+        modelAndView.setViewName("login");
+        modelAndView.addObject("next",next);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)

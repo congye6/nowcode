@@ -35,15 +35,17 @@ public class TicketCheckInterceptor implements HandlerInterceptor{
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String ticket= CookieUtil.getCookie(request,CookieUtil.LOGIN_TICKET);
+        String redirect="/login/page?next="+request.getRequestURL();
+
         TicketVO ticketVO=ticketService.getTicket(ticket);
         if(!ticketService.isValidTicket(ticketVO)){
-            response.sendRedirect("/login/page");
+            response.sendRedirect(redirect);
             return false;
         }
 
         UserVO userVO=userService.getUserById(ticketVO.getUserId());
         if(userVO==null){
-            response.sendRedirect("/login/page");
+            response.sendRedirect(redirect);
             return false;
         }
 
