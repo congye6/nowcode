@@ -49,9 +49,6 @@
       <if test="toId != null">
         to_id,
       </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
       <if test="conversationId != null">
         conversation_id,
       </if>
@@ -69,9 +66,6 @@
       <if test="toId != null">
         #{toId,jdbcType=BIGINT},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
       <if test="conversationId != null">
         #{conversationId,jdbcType=BIGINT},
       </if>
@@ -88,9 +82,6 @@
       </if>
       <if test="toId != null">
         to_id = #{toId,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="conversationId != null">
         conversation_id = #{conversationId,jdbcType=BIGINT},

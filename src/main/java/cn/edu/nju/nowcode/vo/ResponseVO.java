@@ -6,6 +6,8 @@ package cn.edu.nju.nowcode.vo;
  */
 public class ResponseVO {
 
+    private int code;
+
     /**
      * 调用是否成功
      */
@@ -21,16 +23,17 @@ public class ResponseVO {
      */
     private Object content;
 
+
+
     public static ResponseVO buildSuccess(){
-        ResponseVO response=new ResponseVO();
-        response.setSuccess(true);
-        return response;
+        return buildSuccess(null);
     }
 
     public static ResponseVO buildSuccess(Object content){
         ResponseVO response=new ResponseVO();
         response.setContent(content);
         response.setSuccess(true);
+        response.setCode(999);
         return response;
     }
 
@@ -40,6 +43,14 @@ public class ResponseVO {
         response.setMessage(message);
         System.out.println(message);
         return response;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public boolean getSuccess() {

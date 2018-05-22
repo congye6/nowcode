@@ -16,9 +16,6 @@ public interface QuestionMapper {
 
     int updateByPrimaryKeySelective(QuestionVO record);
 
-    int updateByPrimaryKeyWithBLOBs(QuestionVO record);
-
-    int updateByPrimaryKey(QuestionVO record);
 
     List<QuestionVO> getLatestQuestions(@Param("userId") long userId,
                                         @Param("offset") int offset,@Param("limit") int limit);

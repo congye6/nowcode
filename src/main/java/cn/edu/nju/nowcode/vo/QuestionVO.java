@@ -8,7 +8,7 @@ public class QuestionVO implements Serializable {
 
     private String title;
 
-    private Integer commentCount;
+    private Integer commentCount=0;
 
     private String userId;
 

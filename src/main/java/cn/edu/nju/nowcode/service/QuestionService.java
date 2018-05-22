@@ -1,6 +1,7 @@
 package cn.edu.nju.nowcode.service;
 
 import cn.edu.nju.nowcode.vo.QuestionVO;
+import cn.edu.nju.nowcode.vo.ResponseVO;
 
 import java.util.List;
 
@@ -27,5 +28,12 @@ public interface QuestionService {
      * @return
      */
     public List<QuestionVO> getLatestQuestions(int offset,int nums);
+
+    /**
+     * 添加问题
+     * 敏感词过滤
+     * @param questionVO
+     */
+    public ResponseVO addQuestion(QuestionVO questionVO);
 
 }
