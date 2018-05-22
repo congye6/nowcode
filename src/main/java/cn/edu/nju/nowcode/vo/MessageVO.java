@@ -6,9 +6,9 @@ import java.util.Date;
 public class MessageVO implements Serializable {
     private Long id;
 
-    private Long fromId;
+    private String fromId;
 
-    private Long toId;
+    private String toId;
 
     private Date createTime;
 
@@ -26,19 +26,19 @@ public class MessageVO implements Serializable {
         this.id = id;
     }
 
-    public Long getFromId() {
+    public String getFromId() {
         return fromId;
     }
 
-    public void setFromId(Long fromId) {
+    public void setFromId(String fromId) {
         this.fromId = fromId;
     }
 
-    public Long getToId() {
+    public String getToId() {
         return toId;
     }
 
-    public void setToId(Long toId) {
+    public void setToId(String toId) {
         this.toId = toId;
     }
 

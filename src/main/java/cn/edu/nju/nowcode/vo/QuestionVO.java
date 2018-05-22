@@ -10,7 +10,7 @@ public class QuestionVO implements Serializable {
 
     private Integer commentCount;
 
-    private Long userId;
+    private String userId;
 
     private Date createTime;
 
@@ -44,11 +44,11 @@ public class QuestionVO implements Serializable {
         this.commentCount = commentCount;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

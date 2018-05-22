@@ -19,4 +19,13 @@ public interface QuestionService {
      */
     public List<QuestionVO> getLatestQuestions(Long id,int offset,int nums);
 
+
+    /**
+     * 查询全站最新的几个问题
+     * @param offset
+     * @param nums
+     * @return
+     */
+    public List<QuestionVO> getLatestQuestions(int offset,int nums);
+
 }

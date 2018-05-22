@@ -37,7 +37,7 @@ public class UserMapperTest {
 
     @Test
     public void latestQuestion(){
-        questionMapper.getLatestQuestions(1,0,3);
+        questionMapper.getLatestQuestions(0,0,3);
     }
 
     @Test

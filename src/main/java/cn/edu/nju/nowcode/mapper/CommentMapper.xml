@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.edu.nju.nowcode.vo.CommentVO">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="entity_id" jdbcType="BIGINT" property="entityId" />
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="entity_type" jdbcType="CHAR" property="entityType" />
@@ -71,7 +71,7 @@
         #{entityId,jdbcType=BIGINT},
       </if>
       <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
+        #{userId},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -94,7 +94,7 @@
         entity_id = #{entityId,jdbcType=BIGINT},
       </if>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=BIGINT},
+        user_id = #{userId},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},

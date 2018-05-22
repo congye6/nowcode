@@ -3,8 +3,8 @@
 <mapper namespace="cn.edu.nju.nowcode.mapper.MessageMapper">
   <resultMap id="BaseResultMap" type="cn.edu.nju.nowcode.vo.MessageVO">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="from_id" jdbcType="BIGINT" property="fromId" />
-    <result column="to_id" jdbcType="BIGINT" property="toId" />
+    <result column="from_id" jdbcType="VARCHAR" property="fromId" />
+    <result column="to_id" jdbcType="VARCHAR" property="toId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="conversation_id" jdbcType="BIGINT" property="conversationId" />
   </resultMap>
@@ -84,10 +84,10 @@
     update message
     <set>
       <if test="fromId != null">
-        from_id = #{fromId,jdbcType=BIGINT},
+        from_id = #{fromId,jdbcType=VARCHAR},
       </if>
       <if test="toId != null">
-        to_id = #{toId,jdbcType=BIGINT},
+        to_id = #{toId,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},

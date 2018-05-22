@@ -26,4 +26,9 @@ public class QuestionServiceImpl implements QuestionService{
         List<QuestionVO> questions=questionMapper.getLatestQuestions(id,offset,nums);
         return questions;
     }
+
+    @Override
+    public List<QuestionVO> getLatestQuestions(int offset, int nums) {
+        return questionMapper.getLatestQuestions(0,offset,nums);
+    }
 }
