@@ -24,6 +24,9 @@ public class UserMapperTest {
     @Autowired
     private LoginTicketMapper ticketMapper;
 
+    @Autowired
+    private SensitiveMapper sensitiveMapper;
+
     @Test
     public void addUser(){
         UserVO userVO=new UserVO();
@@ -47,6 +50,11 @@ public class UserMapperTest {
         ticketVO.setIsValid(true);
         ticketVO.setTicket("2333");
         ticketMapper.insertSelective(ticketVO);
+    }
+
+    @Test
+    public void getAllSensitive(){
+        System.out.println(sensitiveMapper.selectAllSensitive());
     }
 
 }

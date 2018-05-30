@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.nju.nowcode.mapper.SensitiveMapper">
+  <insert id="insert" parameterType="java.lang.String">
+    insert into `sensitive` (`word`)
+    values (#{word,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="selectAllSensitive" resultType="java.lang.String">
+    SELECT `word` from `sensitive`
+  </select>
+
+</mapper>
