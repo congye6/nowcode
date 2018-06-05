@@ -1,4 +1,4 @@
-package cn.edu.nju.nowcode.service;
+package cn.edu.nju.nowcode.service.impl;
 
 import cn.edu.nju.nowcode.vo.UserVO;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package cn.edu.nju.nowcode.interceptor;
 
 import cn.edu.nju.nowcode.service.LoginTicketService;
-import cn.edu.nju.nowcode.service.UserContext;
+import cn.edu.nju.nowcode.service.impl.UserContext;
 import cn.edu.nju.nowcode.service.UserService;
 import cn.edu.nju.nowcode.util.CookieUtil;
 import cn.edu.nju.nowcode.vo.TicketVO;
@@ -9,7 +9,6 @@ import cn.edu.nju.nowcode.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

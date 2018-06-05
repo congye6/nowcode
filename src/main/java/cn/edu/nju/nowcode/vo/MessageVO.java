@@ -16,6 +16,8 @@ public class MessageVO implements Serializable {
 
     private String content;
 
+    private boolean hasRead;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -64,5 +66,13 @@ public class MessageVO implements Serializable {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public boolean getHasRead() {
+        return hasRead;
+    }
+
+    public void setHasRead(boolean hasRead) {
+        this.hasRead = hasRead;
     }
 }

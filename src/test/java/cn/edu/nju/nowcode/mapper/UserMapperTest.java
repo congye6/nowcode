@@ -27,6 +27,9 @@ public class UserMapperTest {
     @Autowired
     private SensitiveMapper sensitiveMapper;
 
+    @Autowired
+    private MessageMapper messageMapper;
+
     @Test
     public void addUser(){
         UserVO userVO=new UserVO();
@@ -55,6 +58,11 @@ public class UserMapperTest {
     @Test
     public void getAllSensitive(){
         System.out.println(sensitiveMapper.selectAllSensitive());
+    }
+
+    @Test
+    public void updateHasRead(){
+        messageMapper.updateHasRead(true,1l);
     }
 
 }

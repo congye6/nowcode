@@ -38,7 +38,7 @@ public class SensitiveServiceTester {
 
     @Test
     public void sensitiveReplace(){
-        System.out.println(sensitiveService.replaceSensitive("kbjTMDlbj"));
+        System.out.println(sensitiveService.replaceSensitive("kbjTMDlbjkfjggjjgkfjgkfjgggggggggggggggggkfkkkkkl;f;k;kfkdlklfgkldfkgldfkglfdklkd;lfkglfdklgkfldkglkfdlkg;dfkglkdflkgldfkglfkdlkglfkbmkgmbkgbmkgbmkmgkmkmbgkmbgkmkgkgmbjuduhguthgurghtughuthh,j;l,l,lm,l,blmnkmbjgnbjngfjnbjgnb,nl,blvfmbkbgnjgnjnbjhdbhbcfygbngjnbiytbhiydmgjbjgkfbfkdbjgdfklkgmblkmfdlfld;vvf,"));
         System.out.println(sensitiveService.replaceSensitive("TMD666"));
         System.out.println(sensitiveService.replaceSensitive("联国555"));
     }

@@ -29,14 +29,7 @@
     delete from message
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.edu.nju.nowcode.vo.MessageVO">
-    insert into message (id, from_id, to_id, 
-      create_time, conversation_id, content
-      )
-    values (#{id,jdbcType=BIGINT}, #{fromId,jdbcType=BIGINT}, #{toId,jdbcType=BIGINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{conversationId,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR}
-      )
-  </insert>
+
   <insert id="insertSelective" parameterType="cn.edu.nju.nowcode.vo.MessageVO">
     insert into message
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -74,39 +67,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.nju.nowcode.vo.MessageVO">
-    update message
-    <set>
-      <if test="fromId != null">
-        from_id = #{fromId,jdbcType=VARCHAR},
-      </if>
-      <if test="toId != null">
-        to_id = #{toId,jdbcType=VARCHAR},
-      </if>
-      <if test="conversationId != null">
-        conversation_id = #{conversationId,jdbcType=BIGINT},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.nju.nowcode.vo.MessageVO">
-    update message
-    set from_id = #{fromId,jdbcType=BIGINT},
-      to_id = #{toId,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      conversation_id = #{conversationId,jdbcType=BIGINT},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.nju.nowcode.vo.MessageVO">
-    update message
-    set from_id = #{fromId,jdbcType=BIGINT},
-      to_id = #{toId,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      conversation_id = #{conversationId,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
+
+  <update id="updateHasRead">
+    UPDATE message set has_read=#{hasRead} WHERE id=#{id}
   </update>
 </mapper>

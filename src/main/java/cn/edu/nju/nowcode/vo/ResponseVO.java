@@ -23,8 +23,6 @@ public class ResponseVO {
      */
     private Object content;
 
-
-
     public static ResponseVO buildSuccess(){
         return buildSuccess(null);
     }

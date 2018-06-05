@@ -21,7 +21,7 @@ public class IndexController {
     public ModelAndView index(){
         ModelAndView modelAndView=new ModelAndView();
         modelAndView.setViewName("index");
-        modelAndView.addObject("questions",questionService.getLatestQuestions(0,3));
+        modelAndView.addObject("questions",questionService.getLatestQuestions(0,7));
         return modelAndView;
     }
 

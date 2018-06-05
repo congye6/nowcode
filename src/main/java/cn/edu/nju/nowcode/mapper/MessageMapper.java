@@ -2,20 +2,16 @@ package cn.edu.nju.nowcode.mapper;
 
 import cn.edu.nju.nowcode.vo.MessageVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface MessageMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(MessageVO record);
-
     int insertSelective(MessageVO record);
 
     MessageVO selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(MessageVO record);
+    void updateHasRead(@Param("hasRead") boolean hasRead,@Param("id") Long id);
 
-    int updateByPrimaryKeyWithBLOBs(MessageVO record);
-
-    int updateByPrimaryKey(MessageVO record);
 }

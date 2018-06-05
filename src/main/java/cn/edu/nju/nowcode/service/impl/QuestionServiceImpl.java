@@ -2,6 +2,7 @@ package cn.edu.nju.nowcode.service.impl;
 
 import cn.edu.nju.nowcode.mapper.QuestionMapper;
 import cn.edu.nju.nowcode.service.QuestionService;
+import cn.edu.nju.nowcode.service.SensitiveService;
 import cn.edu.nju.nowcode.vo.QuestionVO;
 import cn.edu.nju.nowcode.vo.ResponseVO;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
@@ -21,6 +22,9 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private SensitiveService sensitiveService;
 
     @Override
     public List<QuestionVO> getLatestQuestions(Long id, int offset, int nums) {
@@ -46,6 +50,9 @@ public class QuestionServiceImpl implements QuestionService{
         //去除网页敏感词
         questionVO.setTitle(HtmlUtils.htmlEscape(questionVO.getTitle()));
         questionVO.setContent(HtmlUtils.htmlEscape(questionVO.getContent()));
+
+        questionVO.setTitle(sensitiveService.replaceSensitive(questionVO.getTitle()));
+        questionVO.setContent(sensitiveService.replaceSensitive(questionVO.getContent()));
 
         questionMapper.insertSelective(questionVO);
         return ResponseVO.buildSuccess();

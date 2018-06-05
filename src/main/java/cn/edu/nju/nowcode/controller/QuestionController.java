@@ -1,12 +1,10 @@
 package cn.edu.nju.nowcode.controller;
 
 import cn.edu.nju.nowcode.service.QuestionService;
-import cn.edu.nju.nowcode.service.UserContext;
+import cn.edu.nju.nowcode.service.impl.UserContext;
 import cn.edu.nju.nowcode.vo.QuestionVO;
 import cn.edu.nju.nowcode.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.parsing.QualifierEntry;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
