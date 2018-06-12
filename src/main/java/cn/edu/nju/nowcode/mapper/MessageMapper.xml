@@ -6,7 +6,7 @@
     <result column="from_id" jdbcType="VARCHAR" property="fromId" />
     <result column="to_id" jdbcType="VARCHAR" property="toId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="conversation_id" jdbcType="BIGINT" property="conversationId" />
+    <result column="conversation_id" jdbcType="VARCHAR" property="conversationId" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.edu.nju.nowcode.vo.MessageVO">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
@@ -60,7 +60,7 @@
         #{toId,jdbcType=BIGINT},
       </if>
       <if test="conversationId != null">
-        #{conversationId,jdbcType=BIGINT},
+        #{conversationId,jdbcType=VARCHAR},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
