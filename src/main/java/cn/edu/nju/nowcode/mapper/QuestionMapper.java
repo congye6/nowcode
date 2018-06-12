@@ -8,7 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface QuestionMapper {
-    int deleteByPrimaryKey(Long id);
 
     int insertSelective(QuestionVO record);
 
@@ -19,4 +18,6 @@ public interface QuestionMapper {
 
     List<QuestionVO> getLatestQuestions(@Param("userId") long userId,
                                         @Param("offset") int offset,@Param("limit") int limit);
+
+    void updateDelFlag(@Param("id") Long id,@Param("delFlag") boolean delFlag);
 }

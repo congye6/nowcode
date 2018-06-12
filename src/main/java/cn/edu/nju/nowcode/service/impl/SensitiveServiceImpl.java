@@ -5,6 +5,7 @@ import cn.edu.nju.nowcode.service.SensitiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -49,6 +50,7 @@ public class SensitiveServiceImpl implements SensitiveService{
     public String replaceSensitive(String text) {
         if(StringUtils.isEmpty(text)||ROOT.isEnd())
             return text;
+        text= HtmlUtils.htmlEscape(text);
         StringBuilder result=new StringBuilder();
 
         for(int i=0;i<text.length();i++){

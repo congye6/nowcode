@@ -48,13 +48,26 @@ public class QuestionServiceImpl implements QuestionService{
             return ResponseVO.buildFailure("问题标题不能为空");
 
         //去除网页敏感词
-        questionVO.setTitle(HtmlUtils.htmlEscape(questionVO.getTitle()));
-        questionVO.setContent(HtmlUtils.htmlEscape(questionVO.getContent()));
-
         questionVO.setTitle(sensitiveService.replaceSensitive(questionVO.getTitle()));
         questionVO.setContent(sensitiveService.replaceSensitive(questionVO.getContent()));
 
         questionMapper.insertSelective(questionVO);
         return ResponseVO.buildSuccess();
+    }
+
+    @Override
+    public ResponseVO deleteQuestion(Long questionId) {
+        questionMapper.updateDelFlag(questionId,true)
+        return ResponseVO.buildSuccess();
+    }
+
+    @Override
+    public ResponseVO updateCommentCount(Long questionId, int commentCount) {
+        return null;
+    }
+
+    @Override
+    public ResponseVO getQuestionDetail(Long questionId) {
+        return null;
     }
 }

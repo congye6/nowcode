@@ -34,10 +34,6 @@
     from question
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from question
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
 
   <insert id="insertSelective" parameterType="cn.edu.nju.nowcode.vo.QuestionVO">
     insert into question
@@ -96,5 +92,9 @@
       update_time=CURRENT_TIMESTAMP
     </set>
     where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateDelFlag">
+    UPDATE  question set del_flag=#{delFlag} WHERE id=#{id}
   </update>
 </mapper>

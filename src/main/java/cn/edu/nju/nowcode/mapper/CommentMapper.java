@@ -2,12 +2,12 @@ package cn.edu.nju.nowcode.mapper;
 
 import cn.edu.nju.nowcode.vo.CommentVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface CommentMapper {
-    int deleteByPrimaryKey(Long id);
-
-    int insert(CommentVO record);
 
     int insertSelective(CommentVO record);
 
@@ -15,7 +15,9 @@ public interface CommentMapper {
 
     int updateByPrimaryKeySelective(CommentVO record);
 
-    int updateByPrimaryKeyWithBLOBs(CommentVO record);
+    List<CommentVO> selectByEntityId(Long entityId);
 
-    int updateByPrimaryKey(CommentVO record);
+    void updateDelFlag(@Param("id")Long id, @Param("delFlag")boolean delFlag);
+
+    int selectCount(Long entityId);
 }

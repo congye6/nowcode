@@ -18,6 +18,15 @@
   <sql id="Blob_Column_List">
     content
   </sql>
+
+  <select id="selectByEntityId" parameterType="long" resultMap="BaseResultMap">
+    SELECT * FROM comment WHERE entity_id=#{entityId}
+  </select>
+
+  <select id="selectCount" parameterType="long" resultType="int">
+    SELECT count(id) FROM comment WHERE entity_id=#{entityId}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
@@ -26,18 +35,7 @@
     from comment
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from comment
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="cn.edu.nju.nowcode.vo.CommentVO">
-    insert into comment (id, entity_id, user_id, 
-      create_time, update_time, entity_type, 
-      content)
-    values (#{id,jdbcType=BIGINT}, #{entityId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{entityType,jdbcType=CHAR}, 
-      #{content,jdbcType=LONGVARCHAR})
-  </insert>
+
   <insert id="insertSelective" parameterType="cn.edu.nju.nowcode.vo.CommentVO">
     insert into comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -111,23 +109,8 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.nju.nowcode.vo.CommentVO">
-    update comment
-    set entity_id = #{entityId,jdbcType=BIGINT},
-      user_id = #{userId,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      entity_type = #{entityType,jdbcType=CHAR},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.edu.nju.nowcode.vo.CommentVO">
-    update comment
-    set entity_id = #{entityId,jdbcType=BIGINT},
-      user_id = #{userId,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      entity_type = #{entityType,jdbcType=CHAR}
-    where id = #{id,jdbcType=BIGINT}
+
+  <update id="updateDelFlag">
+    UPDATE  comment set del_flag=#{delFlag} WHERE id=#{id}
   </update>
 </mapper>

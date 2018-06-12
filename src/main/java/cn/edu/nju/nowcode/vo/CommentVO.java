@@ -1,5 +1,7 @@
 package cn.edu.nju.nowcode.vo;
 
+import org.springframework.util.StringUtils;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,6 +21,10 @@ public class CommentVO implements Serializable {
     private String content;
 
     private static final long serialVersionUID = 1L;
+
+    public boolean isValid(){
+        return entityId!=null&&entityId>0&& !StringUtils.isEmpty(userId)&&!StringUtils.isEmpty(content);
+    }
 
     public Long getId() {
         return id;

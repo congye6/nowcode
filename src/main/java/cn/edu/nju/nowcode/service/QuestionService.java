@@ -36,4 +36,28 @@ public interface QuestionService {
      */
     public ResponseVO addQuestion(QuestionVO questionVO);
 
+    /**
+     * 删除问题
+     * @param questionId
+     * @return
+     */
+    public ResponseVO deleteQuestion(Long questionId);
+
+    /**
+     * 更新评论数量
+     * @param questionId
+     * @param commentCount
+     * @return
+     */
+    public ResponseVO updateCommentCount(Long questionId,int commentCount);
+
+    /**
+     * 获取问题的详细信息，包括所有评论
+     * @param questionId
+     * @return
+     */
+    public ResponseVO getQuestionDetail(Long questionId);
+
+
+
 }
