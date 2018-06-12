@@ -12,7 +12,7 @@ public class MessageVO implements Serializable {
 
     private Date createTime;
 
-    private Long conversationId;
+    private String conversationId;
 
     private String content;
 
@@ -52,11 +52,11 @@ public class MessageVO implements Serializable {
         this.createTime = createTime;
     }
 
-    public Long getConversationId() {
+    public String getConversationId() {
         return conversationId;
     }
 
-    public void setConversationId(Long conversationId) {
+    public void setConversationId(String conversationId) {
         this.conversationId = conversationId;
     }
 
