@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Created by cong on 2018-05-22.
  */
-@Controller
+@RestController
 public class QuestionController {
 
     @Autowired
@@ -21,7 +21,6 @@ public class QuestionController {
     private UserContext userContext;
 
     @RequestMapping(value = "/question/add",method = RequestMethod.POST)
-    @ResponseBody
     public ResponseVO addQuestion(@RequestParam String title,@RequestParam String content){
         QuestionVO questionVO=new QuestionVO();
         questionVO.setContent(content);
@@ -30,4 +29,18 @@ public class QuestionController {
         return questionService.addQuestion(questionVO);
     }
 
+    @RequestMapping(value = "/question/latest/{offset}/{nums}",method = RequestMethod.GET)
+    public ResponseVO queryLatestQuestion(@PathVariable Integer offset,@PathVariable Integer nums){
+        return ResponseVO.buildSuccess(questionService.getLatestQuestions(offset,nums));
+    }
+
+    @RequestMapping(value = "/question/delete/{questionId}",method = RequestMethod.POST)
+    public ResponseVO deleteQuestion(@PathVariable Long questionId){
+        return questionService.deleteQuestion(questionId);
+    }
+
+    @RequestMapping(value = "/question/detail/{questionId}",method = RequestMethod.GET)
+    public ResponseVO queryQuestionDetail(@PathVariable Long questionId){
+        return questionService.getQuestionDetail(questionId);
+    }
 }

@@ -15,9 +15,10 @@ public interface CommentMapper {
 
     int updateByPrimaryKeySelective(CommentVO record);
 
-    List<CommentVO> selectByEntityId(Long entityId);
+    List<CommentVO> selectByEntityId(@Param("entityId") Long entityId,@Param("offset") Long offset,
+                                     @Param("limit") int limit,@Param("entityType") String entityType);
 
     void updateDelFlag(@Param("id")Long id, @Param("delFlag")boolean delFlag);
 
-    int selectCount(Long entityId);
+    int selectCount(@Param("entityId") Long entityId,@Param("entityType") String entityType);
 }

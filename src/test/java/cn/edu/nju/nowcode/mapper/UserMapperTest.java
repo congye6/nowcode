@@ -1,5 +1,6 @@
 package cn.edu.nju.nowcode.mapper;
 
+import cn.edu.nju.nowcode.vo.CommentShowVO;
 import cn.edu.nju.nowcode.vo.TicketVO;
 import cn.edu.nju.nowcode.vo.UserVO;
 import org.junit.Test;
@@ -29,6 +30,9 @@ public class UserMapperTest {
 
     @Autowired
     private MessageMapper messageMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
 
     @Test
     public void addUser(){
@@ -63,6 +67,11 @@ public class UserMapperTest {
     @Test
     public void updateHasRead(){
         messageMapper.updateHasRead(true,1l);
+    }
+
+    @Test
+    public void selectCount(){
+        System.out.println(commentMapper.selectCount(1l));
     }
 
 }

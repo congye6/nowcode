@@ -1,8 +1,11 @@
 package cn.edu.nju.nowcode.service.impl;
 
 import cn.edu.nju.nowcode.mapper.QuestionMapper;
+import cn.edu.nju.nowcode.service.CommentService;
 import cn.edu.nju.nowcode.service.QuestionService;
 import cn.edu.nju.nowcode.service.SensitiveService;
+import cn.edu.nju.nowcode.vo.CommentShowVO;
+import cn.edu.nju.nowcode.vo.QuestionDetailVO;
 import cn.edu.nju.nowcode.vo.QuestionVO;
 import cn.edu.nju.nowcode.vo.ResponseVO;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
@@ -25,6 +28,9 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Autowired
     private SensitiveService sensitiveService;
+
+    @Autowired
+    private CommentService commentService;
 
     @Override
     public List<QuestionVO> getLatestQuestions(Long id, int offset, int nums) {
@@ -57,17 +63,25 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public ResponseVO deleteQuestion(Long questionId) {
-        questionMapper.updateDelFlag(questionId,true)
+        questionMapper.updateDelFlag(questionId,true);
         return ResponseVO.buildSuccess();
     }
 
     @Override
     public ResponseVO updateCommentCount(Long questionId, int commentCount) {
-        return null;
+        questionMapper.updateCommentCount(questionId,commentCount);
+        return ResponseVO.buildSuccess();
     }
 
     @Override
     public ResponseVO getQuestionDetail(Long questionId) {
-        return null;
+        QuestionDetailVO questionDetail=new QuestionDetailVO();
+        QuestionVO question=questionMapper.selectByPrimaryKey(questionId);
+        if(question==null)
+            return ResponseVO.buildFailure("问题不存在");
+        questionDetail.setQuestionVO(question);
+        List<CommentShowVO> comments=(List<CommentShowVO>)commentService.queryCommentByQuestion(questionId,0l,20).getContent();
+        questionDetail.setComments(comments);
+        return ResponseVO.buildSuccess(questionDetail);
     }
 }

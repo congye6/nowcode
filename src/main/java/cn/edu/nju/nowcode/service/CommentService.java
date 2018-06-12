@@ -21,14 +21,23 @@ public interface CommentService {
      * @param questionId
      * @return
      */
-    public ResponseVO queryCommentByQuestion(Long questionId);
+    public ResponseVO queryCommentByQuestion(Long questionId,Long offset,int limit);
+
+    /**
+     * 查询评论的评论
+     * @param commentId
+     * @param offset
+     * @param limit
+     * @return
+     */
+    public ResponseVO queryCommentByComment(Long commentId,Long offset,int limit);
 
     /**
      * 查询评论数量
      * @param entityId
      * @return
      */
-    public int commentCount(Long entityId);
+    public int commentCount(Long entityId,String entityType);
 
     /**
      * 删除评论，软删除

@@ -25,14 +25,15 @@
     <if test="userId!=0">
       where user_id=#{userId}
     </if>
-    ORDER BY id DESC limit #{offset},#{limit}
+    and del_flag=0
+    ORDER BY id DESC limit #{offset},#{limit} AND del_flag=0
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     from question
-    where id = #{id,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT} AND del_flag=0
   </select>
 
   <insert id="insertSelective" parameterType="cn.edu.nju.nowcode.vo.QuestionVO">
@@ -96,5 +97,9 @@
 
   <update id="updateDelFlag">
     UPDATE  question set del_flag=#{delFlag} WHERE id=#{id}
+  </update>
+
+  <update id="updateCommentCount">
+    UPDATE question set comment_count=#{count} WHERE id=#{id}
   </update>
 </mapper>
