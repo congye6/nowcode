@@ -62,6 +62,7 @@ public class CommentServiceImpl implements CommentService{
                 return ResponseVO.buildFailure("系统错误");
             List<CommentVO> commentsOfComment=commentMapper.selectByEntityId(comment.getId(),0l,5,"Comment");
             comment.setComments(commentsOfComment);
+            commentShowVOS.add(comment);
         }
 
         return ResponseVO.buildSuccess(commentShowVOS);

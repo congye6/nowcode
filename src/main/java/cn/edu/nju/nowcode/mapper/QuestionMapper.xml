@@ -22,11 +22,12 @@
 
   <select id="getLatestQuestions" resultMap="BaseResultMap">
     SELECT * FROM question
+    where
     <if test="userId!=0">
-      where user_id=#{userId}
+      user_id=#{userId} and
     </if>
-    and del_flag=0
-    ORDER BY id DESC limit #{offset},#{limit} AND del_flag=0
+    del_flag=0
+    ORDER BY id DESC limit #{offset},#{limit}
   </select>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">

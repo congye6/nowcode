@@ -23,7 +23,7 @@ public class CommentController {
 
     @RequestMapping(value = "/comment/question/{questionId}/more/{offset}/{limit}",method = RequestMethod.GET)
     public ResponseVO queryCommentByQuestion(@PathVariable Long questionId,@PathVariable Long offset,@PathVariable Integer limit){
-        return commentService.queryCommentByQuestion(questionId,offset,limit)
+        return commentService.queryCommentByQuestion(questionId,offset,limit);
     }
 
     @RequestMapping(value = "/comment/add",method = RequestMethod.POST)

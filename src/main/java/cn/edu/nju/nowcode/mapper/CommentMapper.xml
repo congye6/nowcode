@@ -20,7 +20,8 @@
   </sql>
 
   <select id="selectByEntityId"  resultMap="BaseResultMap">
-    SELECT * FROM comment WHERE entity_id=#{entityId} AND entity_type=#{entityType} AND del_flag=0 limit #{offset},#{limit}
+    SELECT * FROM comment WHERE entity_id=#{entityId} AND entity_type=#{entityType} AND del_flag=0
+    order by id limit #{offset},#{limit}
   </select>
 
   <select id="selectCount"  resultType="int">
@@ -40,20 +41,11 @@
   <insert id="insertSelective" parameterType="cn.edu.nju.nowcode.vo.CommentVO">
     insert into comment
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="entityId != null">
         entity_id,
       </if>
       <if test="userId != null">
         user_id,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
       </if>
       <if test="entityType != null">
         entity_type,
@@ -63,20 +55,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="entityId != null">
         #{entityId,jdbcType=BIGINT},
       </if>
       <if test="userId != null">
         #{userId},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="entityType != null">
         #{entityType,jdbcType=CHAR},
@@ -94,12 +77,6 @@
       </if>
       <if test="userId != null">
         user_id = #{userId},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="entityType != null">
         entity_type = #{entityType,jdbcType=CHAR},

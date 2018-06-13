@@ -71,7 +71,7 @@ public class UserMapperTest {
 
     @Test
     public void selectCount(){
-        System.out.println(commentMapper.selectCount(1l));
+        System.out.println(commentMapper.selectCount(1l,"Question"));
     }
 
 }
