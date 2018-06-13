@@ -29,4 +29,11 @@ public interface UserService {
      */
     public void addUser(UserVO userVO);
 
+    /**
+     * 用户是否存在
+     * @param userId
+     * @return
+     */
+    public boolean isExist(String userId);
+
 }

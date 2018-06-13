@@ -17,6 +17,16 @@
   <sql id="Blob_Column_List">
     content
   </sql>
+
+  <select id="selectByUser" resultMap="BaseResultMap">
+    select * from (select * from message where to_id=#{toId} order by create_time desc limit 10000) user_message group by conversation_id
+     order by create_time desc limit #{offset},#{limit}
+  </select>
+
+  <select id="selectByConversation" resultMap="BaseResultMap">
+    select * from message where conversation_id=#{conversationId} order by id desc limit #{offset},#{limit}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
@@ -25,10 +35,6 @@
     from message
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from message
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
 
   <insert id="insertSelective" parameterType="cn.edu.nju.nowcode.vo.MessageVO">
     insert into message

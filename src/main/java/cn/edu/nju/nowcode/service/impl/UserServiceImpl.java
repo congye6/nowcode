@@ -34,4 +34,9 @@ public class UserServiceImpl implements UserService{
     public void addUser(UserVO userVO) {
         mapper.insertSelective(userVO);
     }
+
+    @Override
+    public boolean isExist(String userId) {
+        return mapper.selectByName(userId)!=null;
+    }
 }
