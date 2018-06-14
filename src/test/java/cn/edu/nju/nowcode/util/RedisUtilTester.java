@@ -22,5 +22,13 @@ public class RedisUtilTester {
         System.out.println(redisUtil.get("congye6"));
     }
 
+    @Test
+    public void testSet(){
+        redisUtil.sadd("set","niupi");
+        System.out.println(redisUtil.sget("set"));
+        System.out.println(redisUtil.scount("set"));
+        System.out.println(redisUtil.isMember("set","niupi"));
+    }
+
 
 }

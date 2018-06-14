@@ -2,6 +2,7 @@ package cn.edu.nju.nowcode.service.impl;
 
 import cn.edu.nju.nowcode.mapper.QuestionMapper;
 import cn.edu.nju.nowcode.service.CommentService;
+import cn.edu.nju.nowcode.service.LikeService;
 import cn.edu.nju.nowcode.service.QuestionService;
 import cn.edu.nju.nowcode.service.SensitiveService;
 import cn.edu.nju.nowcode.vo.CommentShowVO;
@@ -31,6 +32,9 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private LikeService likeService;
 
     @Override
     public List<QuestionVO> getLatestQuestions(Long id, int offset, int nums) {
@@ -76,6 +80,7 @@ public class QuestionServiceImpl implements QuestionService{
     @Override
     public ResponseVO getQuestionDetail(Long questionId) {
         QuestionDetailVO questionDetail=new QuestionDetailVO();
+        questionDetail.setLikeCount(likeService.count("Question",questionId));
         QuestionVO question=questionMapper.selectByPrimaryKey(questionId);
         if(question==null)
             return ResponseVO.buildFailure("问题不存在");

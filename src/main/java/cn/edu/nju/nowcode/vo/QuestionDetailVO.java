@@ -12,6 +12,15 @@ public class QuestionDetailVO{
 
     private List<CommentShowVO> comments;
 
+    private Long likeCount;
+
+    public Long getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Long likeCount) {
+        this.likeCount = likeCount;
+    }
 
     public QuestionVO getQuestionVO() {
         return questionVO;

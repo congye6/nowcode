@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -60,6 +61,32 @@ public class RedisUtil {
      */
     public String get(String key){
         return redisTemplate.opsForValue().get(key);
+    }
+
+
+    /**
+     * 集合操作
+     * @param key
+     * @return
+     */
+    public Set<String> sget(String key){
+        return redisTemplate.opsForSet().members(key);
+    }
+
+    public void sadd(String key,Object value){
+        redisTemplate.opsForSet().add(key,JSONObject.toJSONString(value));
+    }
+
+    public boolean isMember(String key,Object value){
+        return redisTemplate.opsForSet().isMember(key,JSONObject.toJSONString(value));
+    }
+
+    public Long scount(String key){
+        return redisTemplate.opsForSet().size(key);
+    }
+
+    public void sremove(String key,String value){
+        redisTemplate.opsForSet().remove(key,JSONObject.toJSONString(value));
     }
 
 }

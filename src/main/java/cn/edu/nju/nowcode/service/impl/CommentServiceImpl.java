@@ -2,6 +2,7 @@ package cn.edu.nju.nowcode.service.impl;
 
 import cn.edu.nju.nowcode.mapper.CommentMapper;
 import cn.edu.nju.nowcode.service.CommentService;
+import cn.edu.nju.nowcode.service.LikeService;
 import cn.edu.nju.nowcode.service.QuestionService;
 import cn.edu.nju.nowcode.service.SensitiveService;
 import cn.edu.nju.nowcode.vo.CommentShowVO;
@@ -29,6 +30,9 @@ public class CommentServiceImpl implements CommentService{
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private LikeService likeService;
 
     @Override
     public ResponseVO addComment(CommentVO commentVO) {
@@ -58,6 +62,7 @@ public class CommentServiceImpl implements CommentService{
         for(CommentVO commentVO:comments){
             CommentShowVO comment=new CommentShowVO();
             BeanUtils.copyProperties(commentVO,comment);
+            comment.setLikeCount(likeService.count("Comment",comment.getId()));
             if(comment.getId()==null||comment.getId()<=0)
                 return ResponseVO.buildFailure("系统错误");
             List<CommentVO> commentsOfComment=commentMapper.selectByEntityId(comment.getId(),0l,5,"Comment");
