@@ -32,12 +32,12 @@ public class RedisUtilTester {
 
     @Test
     public void testZSet(){
-        redisUtil.zsadd("zset","niupi",1000.0);
-        redisUtil.zsadd("zset","niupi2",1001.0);
-        redisUtil.zsadd("zset","niupi3",10.0);
-        System.out.println(redisUtil.zspop("zset"));
-        System.out.println(redisUtil.zspop("zset"));
-        System.out.println(redisUtil.zspop("zset"));
+        redisUtil.ladd("list","niupi");
+        redisUtil.ladd("list","niupi2");
+        redisUtil.ladd("list","niupi3");
+        System.out.println(redisUtil.lget("list"));
+        System.out.println(redisUtil.lget("list"));
+        System.out.println(redisUtil.lget("list"));
     }
 
 

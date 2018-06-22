@@ -97,12 +97,20 @@ public class RedisUtil {
         redisTemplate.opsForZSet().add(key,JSONObject.toJSONString(value),score);
     }
 
-    public String zspop(String key){
+
+    /**
+     * list操作
+     */
+    public void ladd(String key,Object value){
+        redisTemplate.opsForList().leftPush(key,JSONObject.toJSONString(value));
+    }
+
+    public String lget(String key){
         String result = redisTemplate.execute(new RedisCallback<String>() {
             public String doInRedis(RedisConnection connection) {
                 Jedis jedis = (Jedis) connection.getNativeConnection();
 
-                return jedis.blpop(key).get(0);
+                return jedis.blpop(0,key).get(1);
             }
         }, true);
         return result;
