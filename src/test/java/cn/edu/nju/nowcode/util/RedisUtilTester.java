@@ -30,5 +30,15 @@ public class RedisUtilTester {
         System.out.println(redisUtil.isMember("set","niupi"));
     }
 
+    @Test
+    public void testZSet(){
+        redisUtil.zsadd("zset","niupi",1000.0);
+        redisUtil.zsadd("zset","niupi2",1001.0);
+        redisUtil.zsadd("zset","niupi3",10.0);
+        System.out.println(redisUtil.zspop("zset"));
+        System.out.println(redisUtil.zspop("zset"));
+        System.out.println(redisUtil.zspop("zset"));
+    }
+
 
 }

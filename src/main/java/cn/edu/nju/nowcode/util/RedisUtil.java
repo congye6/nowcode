@@ -30,6 +30,7 @@ public class RedisUtil {
         Long result = redisTemplate.execute(new RedisCallback<Long>() {
             public Long doInRedis(RedisConnection connection) {
                 Jedis jedis = (Jedis) connection.getNativeConnection();
+
                 return jedis.incr(key);
             }
         }, true);
@@ -87,6 +88,24 @@ public class RedisUtil {
 
     public void sremove(String key,String value){
         redisTemplate.opsForSet().remove(key,JSONObject.toJSONString(value));
+    }
+
+    /**
+     * 有序集合
+     */
+    public void zsadd(String key,Object value,Double score){
+        redisTemplate.opsForZSet().add(key,JSONObject.toJSONString(value),score);
+    }
+
+    public String zspop(String key){
+        String result = redisTemplate.execute(new RedisCallback<String>() {
+            public String doInRedis(RedisConnection connection) {
+                Jedis jedis = (Jedis) connection.getNativeConnection();
+
+                return jedis.blpop(key).get(0);
+            }
+        }, true);
+        return result;
     }
 
 }
