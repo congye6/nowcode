@@ -4,7 +4,6 @@ import cn.edu.nju.nowcode.enumeration.EventType;
 import cn.edu.nju.nowcode.util.RedisUtil;
 import cn.edu.nju.nowcode.vo.EventVO;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -15,6 +14,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 @Service
 public class EventComsumer implements ApplicationContextAware {
@@ -23,6 +24,11 @@ public class EventComsumer implements ApplicationContextAware {
 
     @Autowired
     private RedisUtil redisUtil;
+
+    /**
+     * 执行异步任务的线程池
+     */
+    private static final Executor COMSUMER_THREAD_POOL= Executors.newFixedThreadPool(20);
 
     /**
      * 事件和相应处理handler的映射
@@ -74,7 +80,8 @@ public class EventComsumer implements ApplicationContextAware {
                     continue;
                 List<EventHandler> matchHandlers=handlerMap.get(event.getEventType());
                 for(EventHandler handler:matchHandlers){
-                    handler.handle(event);
+                    EventHandleTask task=new EventHandleTask(event,handler);
+                    COMSUMER_THREAD_POOL.execute(task);
                 }
             }
         }
