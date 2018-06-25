@@ -1,7 +1,10 @@
 package cn.edu.nju.nowcode.service.impl;
 
+import cn.edu.nju.nowcode.async_queue.EventProducer;
+import cn.edu.nju.nowcode.enumeration.EventType;
 import cn.edu.nju.nowcode.service.LikeService;
 import cn.edu.nju.nowcode.util.RedisUtil;
+import cn.edu.nju.nowcode.vo.EventVO;
 import cn.edu.nju.nowcode.vo.LikeVO;
 import cn.edu.nju.nowcode.vo.ResponseVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +21,16 @@ public class LikeServiceImpl implements LikeService {
     @Autowired
     private RedisUtil redisUtil;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @Override
     public ResponseVO like(LikeVO likeVO) {
         String key=getKey(likeVO);
         if(redisUtil.isMember(key,likeVO.getUserId()))
             return ResponseVO.buildFailure("已经点赞成功");
         redisUtil.sadd(key,likeVO.getUserId());
+        eventProducer.produce(new EventVO(EventType.LIKE,likeVO.getUserId(),likeVO.getEntityType(),likeVO.getEntityId(),null));
         return ResponseVO.buildSuccess(redisUtil.scount(key));
     }
 

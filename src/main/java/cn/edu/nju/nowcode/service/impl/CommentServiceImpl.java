@@ -80,6 +80,11 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    public CommentVO queryCommentById(Long commentId) {
+        return commentMapper.selectByPrimaryKey(commentId);
+    }
+
+    @Override
     public int commentCount(Long entityId,String entityType) {
         return commentMapper.selectCount(entityId,entityType);
     }

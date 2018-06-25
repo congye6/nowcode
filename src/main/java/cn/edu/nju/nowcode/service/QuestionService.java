@@ -30,6 +30,13 @@ public interface QuestionService {
     public List<QuestionVO> getLatestQuestions(int offset,int nums);
 
     /**
+     * 根据id获取问题
+     * @param questionId
+     * @return
+     */
+    public QuestionVO getQuestionById(Long questionId);
+
+    /**
      * 添加问题
      * 敏感词过滤
      * @param questionVO

@@ -50,6 +50,11 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
+    public QuestionVO getQuestionById(Long questionId) {
+        return questionMapper.selectByPrimaryKey(questionId);
+    }
+
+    @Override
     public ResponseVO addQuestion(QuestionVO questionVO) {
 
         if(StringUtils.isEmpty(questionVO.getUserId()))

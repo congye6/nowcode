@@ -102,7 +102,12 @@ public class RedisUtil {
      * list操作
      */
     public void ladd(String key,Object value){
-        redisTemplate.opsForList().leftPush(key,JSONObject.toJSONString(value));
+        String json=null;
+        if(!(value instanceof String))
+            json=JSONObject.toJSONString(value);
+        else
+            json=(String)value;
+        redisTemplate.opsForList().leftPush(key,json);
     }
 
     public String lget(String key){

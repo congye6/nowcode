@@ -27,6 +27,33 @@ public class EventVO {
 
     private Map<String,Object> extData;
 
+    public EventVO(EventType eventType, String actorId, String entityType, Long entityId, String entityOwnerId) {
+        this.eventType = eventType;
+        this.actorId = actorId;
+        this.entityType = entityType;
+        this.entityId = entityId;
+        this.entityOwnerId = entityOwnerId;
+    }
+
+    public EventVO(EventType eventType, String actorId, String entityType, Long entityId, String entityOwnerId, Map<String, Object> extData) {
+        this.eventType = eventType;
+        this.actorId = actorId;
+        this.entityType = entityType;
+        this.entityId = entityId;
+        this.entityOwnerId = entityOwnerId;
+        this.extData = extData;
+    }
+
+    public EventVO(EventType eventType, String actorId, Map<String, Object> extData) {
+        this.eventType = eventType;
+        this.actorId = actorId;
+        this.extData = extData;
+    }
+
+    public EventVO(){
+
+    }
+
     public EventType getEventType() {
         return eventType;
     }

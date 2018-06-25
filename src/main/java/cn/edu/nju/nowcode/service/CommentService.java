@@ -33,6 +33,13 @@ public interface CommentService {
     public ResponseVO queryCommentByComment(Long commentId,Long offset,int limit);
 
     /**
+     * 根据id查询评论
+     * @param commentId
+     * @return
+     */
+    public CommentVO queryCommentById(Long commentId);
+
+    /**
      * 查询评论数量
      * @param entityId
      * @return
