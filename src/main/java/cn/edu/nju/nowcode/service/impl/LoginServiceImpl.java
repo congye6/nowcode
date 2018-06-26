@@ -1,9 +1,11 @@
 package cn.edu.nju.nowcode.service.impl;
 
+import cn.edu.nju.nowcode.async_queue.EventProducer;
 import cn.edu.nju.nowcode.service.LoginService;
 import cn.edu.nju.nowcode.service.UserService;
 import cn.edu.nju.nowcode.util.SecurityUtil;
 import cn.edu.nju.nowcode.util.UUIDUtil;
+import cn.edu.nju.nowcode.vo.EventVO;
 import cn.edu.nju.nowcode.vo.ResponseVO;
 import cn.edu.nju.nowcode.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class LoginServiceImpl implements LoginService{
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EventProducer eventProducer;
 
     @Override
     public ResponseVO register(UserVO userVO) {
@@ -46,6 +51,11 @@ public class LoginServiceImpl implements LoginService{
         String password=SecurityUtil.md5(userVO.getPassword(),userVOInDb.getSalt());
         if(!password.equals(userVOInDb.getPassword()))
             return ResponseVO.buildFailure("密码错误");
+
+        EventVO eventVO=new EventVO();
+        eventVO.addExtData("email",userVOInDb.getEmail());
+        eventProducer.produce(eventVO);
+
         return ResponseVO.buildSuccess(userVOInDb);
     }
 

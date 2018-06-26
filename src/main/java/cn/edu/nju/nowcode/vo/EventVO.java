@@ -2,6 +2,7 @@ package cn.edu.nju.nowcode.vo;
 
 import cn.edu.nju.nowcode.enumeration.EventType;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class EventVO {
@@ -25,7 +26,7 @@ public class EventVO {
 
     private String entityOwnerId;
 
-    private Map<String,Object> extData;
+    private Map<String,Object> extData=new HashMap<>();
 
     public EventVO(EventType eventType, String actorId, String entityType, Long entityId, String entityOwnerId) {
         this.eventType = eventType;
@@ -100,5 +101,9 @@ public class EventVO {
 
     public void setExtData(Map<String, Object> extData) {
         this.extData = extData;
+    }
+
+    public void addExtData(String key,Object value){
+        extData.put(key,value);
     }
 }
