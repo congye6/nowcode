@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -97,6 +98,22 @@ public class RedisUtil {
         redisTemplate.opsForZSet().add(key,JSONObject.toJSONString(value),score);
     }
 
+    public Set<String> zRevRange(String key,Long start,Long end){
+        return redisTemplate.opsForZSet().reverseRange(key,start,end);
+    }
+
+    public void zremove(String key,Object value){
+        redisTemplate.opsForZSet().remove(key,JSONObject.toJSONString(value));
+    }
+
+    public Long zcount(String key){
+        return redisTemplate.opsForZSet().zCard(key);
+    }
+
+    public boolean zIsMember(String key,Object value){
+        return redisTemplate.opsForZSet().rank(key,JSONObject.toJSONString(value))!=null;
+    }
+
 
     /**
      * list操作
@@ -118,7 +135,36 @@ public class RedisUtil {
                 return jedis.blpop(0,key).get(1);
             }
         }, true);
+
         return result;
     }
+
+    /**
+     * map
+     */
+    public void madd(String mapKey,String key,Object value){
+        redisTemplate.opsForHash().put(mapKey,key,JSONObject.toJSONString(value));
+    }
+
+    public Object mget(String mapKey,String key){
+        return redisTemplate.opsForHash().get(mapKey,key);
+    }
+
+    /**
+     * 事务
+     */
+    public void startTransaction(){
+        redisTemplate.setEnableTransactionSupport(true);
+        redisTemplate.multi();
+    }
+
+    public boolean commitTransaction(){
+        List<Object> result=redisTemplate.exec();
+        if(result.size()!=2)
+            return false;
+        return (Boolean)result.get(0)&&(Boolean)result.get(1);
+    }
+
+
 
 }

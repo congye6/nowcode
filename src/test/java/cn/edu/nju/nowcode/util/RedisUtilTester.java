@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Set;
+
 /**
  * Created by cong on 2018-06-13.
  */
@@ -31,13 +33,22 @@ public class RedisUtilTester {
     }
 
     @Test
-    public void testZSet(){
+    public void testList(){
         redisUtil.ladd("list","niupi");
         redisUtil.ladd("list","niupi2");
         redisUtil.ladd("list","niupi3");
         System.out.println(redisUtil.lget("list"));
         System.out.println(redisUtil.lget("list"));
         System.out.println(redisUtil.lget("list"));
+    }
+
+    @Test
+    public void testZset(){
+        Set<String> set=redisUtil.zRevRange("zset",0L,10L);
+        System.out.println(set);
+        System.out.println(redisUtil.zcount("zset"));
+        System.out.println(redisUtil.zIsMember("zset","niupi"));
+        System.out.println(redisUtil.zIsMember("zset","niupi2"));
     }
 
 
