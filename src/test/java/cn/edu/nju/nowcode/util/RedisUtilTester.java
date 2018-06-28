@@ -52,4 +52,25 @@ public class RedisUtilTester {
     }
 
 
+    @Test
+    public void testMap(){
+        String key="map";
+        redisUtil.madd(key,"niupi","666");
+        redisUtil.madd(key,"niupi2",777);
+        Long result=Long.valueOf((String)redisUtil.mget(key,"niupi2"));
+        System.out.println(result-1);
+    }
+
+    @Test
+    public void testIncr(){
+        String key="increment";
+        redisUtil.increment(key);
+        System.out.println(redisUtil.get(key));
+        redisUtil.increment(key);
+        System.out.println(redisUtil.get(key));
+        redisUtil.desc(key);
+        System.out.println(redisUtil.get(key));
+    }
+
+
 }

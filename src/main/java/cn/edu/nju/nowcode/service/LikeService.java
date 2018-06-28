@@ -31,5 +31,12 @@ public interface LikeService {
      */
     public Long count(String entityType,Long entityId);
 
+    /**
+     * 获取用户被赞次数
+     * @param userId
+     * @return
+     */
+    public Integer userLikeCount(String userId);
+
 
 }

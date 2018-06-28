@@ -38,6 +38,17 @@ public class RedisUtil {
         return result;
     }
 
+    public Long desc(String key){
+        Long result = redisTemplate.execute(new RedisCallback<Long>() {
+            public Long doInRedis(RedisConnection connection) {
+                Jedis jedis = (Jedis) connection.getNativeConnection();
+
+                return jedis.decr(key);
+            }
+        }, true);
+        return result;
+    }
+
     /**
      * 添加一个string类型的value
      * @param key

@@ -94,4 +94,9 @@ public class QuestionServiceImpl implements QuestionService{
         questionDetail.setComments(comments);
         return ResponseVO.buildSuccess(questionDetail);
     }
+
+    @Override
+    public Integer getQuestionCount(String userId) {
+        return questionMapper.getQuestionCountByUser(userId);
+    }
 }

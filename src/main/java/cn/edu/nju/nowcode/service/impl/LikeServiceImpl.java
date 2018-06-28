@@ -18,6 +18,8 @@ public class LikeServiceImpl implements LikeService {
 
     private static final String SPLITER="_";
 
+    private static final String USER_LIKE_COUNT_KEY="user_like_count_";
+
     @Autowired
     private RedisUtil redisUtil;
 
@@ -34,12 +36,14 @@ public class LikeServiceImpl implements LikeService {
         return ResponseVO.buildSuccess(redisUtil.scount(key));
     }
 
+
     @Override
     public ResponseVO dislike(LikeVO likeVO) {
         String key=getKey(likeVO);
         if(!redisUtil.isMember(key,likeVO.getUserId()))
             return ResponseVO.buildFailure("已经取消点赞");
         redisUtil.sremove(key,likeVO.getUserId());
+        eventProducer.produce(new EventVO(EventType.DISLIKE,likeVO.getUserId(),likeVO.getEntityType(),likeVO.getEntityId(),null));
         return ResponseVO.buildSuccess(redisUtil.scount(key));
     }
 
@@ -49,6 +53,11 @@ public class LikeServiceImpl implements LikeService {
         likeVO.setEntityId(entityId);
         likeVO.setEntityType(entityType);
         return redisUtil.scount(getKey(likeVO));
+    }
+
+    @Override
+    public Integer userLikeCount(String userId) {
+        return Integer.valueOf(redisUtil.get(USER_LIKE_COUNT_KEY+userId));
     }
 
     private String getKey(LikeVO likeVO){

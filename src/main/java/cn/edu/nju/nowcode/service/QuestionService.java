@@ -65,6 +65,13 @@ public interface QuestionService {
      */
     public ResponseVO getQuestionDetail(Long questionId);
 
+    /**
+     * 获取用户发表过的问题数量
+     * @param userId
+     * @return
+     */
+    public Integer getQuestionCount(String userId);
+
 
 
 }

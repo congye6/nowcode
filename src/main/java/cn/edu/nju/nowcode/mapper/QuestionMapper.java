@@ -22,4 +22,6 @@ public interface QuestionMapper {
     void updateDelFlag(@Param("id") Long id,@Param("delFlag") boolean delFlag);
 
     void updateCommentCount(@Param("id") Long id,@Param("count") Integer count);
+
+    Integer getQuestionCountByUser(String userId);
 }

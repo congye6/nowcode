@@ -30,6 +30,10 @@
     ORDER BY id DESC limit #{offset},#{limit}
   </select>
 
+  <select id="getQuestionCountByUser" resultType="int" parameterMap="java.lang.String">
+    select count(id) from question where user_id=#{userId}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />

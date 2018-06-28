@@ -25,4 +25,31 @@ public class FollowUserController {
         return followUserService.follow(userId,followerId);
     }
 
+    @RequestMapping(value = "/follow/cancel/user/{followerId}",method = RequestMethod.POST)
+    public ResponseVO unfollow(@PathVariable String followerId){
+        String userId=userContext.getUser().getUsername();
+        return followUserService.unfollow(userId,followerId);
+    }
+
+    @RequestMapping(value = "/follow/list/{userId}/{start}/{end}",method = RequestMethod.GET)
+    public ResponseVO getFollowers(@PathVariable String userId,@PathVariable Long start,@PathVariable Long end){
+        return followUserService.getFollowers(userId,start,end);
+    }
+
+    @RequestMapping(value = "/follow/fans/list/{userId}/{start}/{end}",method = RequestMethod.GET)
+    public ResponseVO getFans(@PathVariable String userId,@PathVariable Long start,@PathVariable Long end){
+        return followUserService.getFans(userId,start,end);
+    }
+
+    @RequestMapping(value = "/follow/fans/count/{userId}",method = RequestMethod.GET)
+    public Integer getFansCount(@PathVariable String userId){
+        return followUserService.getFansCount(userId);
+    }
+
+    @RequestMapping(value = "/follow/is/{followerId}")
+    public Boolean isFollower(@PathVariable String followerId){
+        String userId=userContext.getUser().getUsername();
+        return followUserService.isFollower(userId,followerId);
+    }
+
 }
