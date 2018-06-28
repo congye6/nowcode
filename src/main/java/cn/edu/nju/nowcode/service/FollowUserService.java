@@ -51,4 +51,6 @@ public interface FollowUserService {
      * @return
      */
     public Boolean isFollower(String userId,String followerId);
+
+    public Integer getFollowerCount(String userId);
 }

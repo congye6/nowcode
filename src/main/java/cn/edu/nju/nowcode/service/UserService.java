@@ -1,5 +1,6 @@
 package cn.edu.nju.nowcode.service;
 
+import cn.edu.nju.nowcode.vo.UserInfoVO;
 import cn.edu.nju.nowcode.vo.UserVO;
 
 /**
@@ -35,5 +36,12 @@ public interface UserService {
      * @return
      */
     public boolean isExist(String userId);
+
+    /**
+     * 获取用户的概要信息
+     * @param userId
+     * @return
+     */
+    public UserInfoVO getUserInfo(String userId);
 
 }

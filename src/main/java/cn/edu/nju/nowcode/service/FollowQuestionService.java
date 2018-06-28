@@ -31,6 +31,15 @@ public interface FollowQuestionService {
     public ResponseVO getFans(Long questionId,Long start,Long end);
 
     /**
+     * 获取所有关注的问题信息
+     * @param userId
+     * @param start
+     * @param end
+     * @return
+     */
+    public ResponseVO getFollowQuestions(String userId,Long start,Long end);
+
+    /**
      * 获取粉丝数量
      * @param questionId
      * @return

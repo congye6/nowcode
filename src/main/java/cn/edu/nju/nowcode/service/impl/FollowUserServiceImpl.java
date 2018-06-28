@@ -3,8 +3,9 @@ package cn.edu.nju.nowcode.service.impl;
 import cn.edu.nju.nowcode.service.FollowUserService;
 import cn.edu.nju.nowcode.service.LikeService;
 import cn.edu.nju.nowcode.service.QuestionService;
+import cn.edu.nju.nowcode.service.UserService;
 import cn.edu.nju.nowcode.util.RedisUtil;
-import cn.edu.nju.nowcode.vo.FollowVO;
+import cn.edu.nju.nowcode.vo.UserInfoVO;
 import cn.edu.nju.nowcode.vo.ResponseVO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,56 +26,31 @@ public class FollowUserServiceImpl implements FollowUserService {
     private static final Logger LOGGER=Logger.getLogger(FollowUserServiceImpl.class);
 
     @Autowired
+    private FollowHelper followHelper;
+
+    @Autowired
     private RedisUtil redisUtil;
-
-    @Autowired
-    private LikeService likeService;
-
-    @Autowired
-    private QuestionService questionService;
 
     @Override
     public ResponseVO follow(String userId, String followerId) {
-        try{
-            redisUtil.startTransaction();
-            redisUtil.zsadd(getFollowKey(userId),followerId,new Date().getTime()+0.0);
-            redisUtil.zsadd(getFansKey(followerId),userId,new Date().getTime()+0.0);
-            boolean result=redisUtil.commitTransaction();
-            if(!result)
-                return ResponseVO.buildFailure("关注失败，请确认是否已经关注");
-        }catch (Exception e){
-            LOGGER.error("关注失败",e);
-            return ResponseVO.buildFailure("关注失败，请重试");
-        }
-        return ResponseVO.buildSuccess();
+        return followHelper.follow(userId,followerId,getFollowKey(userId),getFansKey(followerId));
     }
 
     @Override
     public ResponseVO unfollow(String userId, String followerId) {
-        try{
-            redisUtil.startTransaction();
-            redisUtil.zremove(getFollowKey(userId),followerId);
-            redisUtil.zremove(getFansKey(followerId),userId);
-            boolean result=redisUtil.commitTransaction();
-            if(!result)
-                return ResponseVO.buildFailure("关注失败，请确认是否已经关注");
-        }catch (Exception e){
-            LOGGER.error("关注失败",e);
-            return ResponseVO.buildFailure("关注失败，请重试");
-        }
-        return ResponseVO.buildSuccess();
+        return followHelper.unfollow(userId,followerId,getFollowKey(userId),getFansKey(followerId));
     }
 
     @Override
     public ResponseVO getFollowers(String userId, Long start, Long end) {
         Set<String> users=redisUtil.zRevRange(getFollowKey(userId),start,end);
-        return ResponseVO.buildSuccess(getUserInfos(users));
+        return ResponseVO.buildSuccess(followHelper.getUserInfos(users));
     }
 
     @Override
     public ResponseVO getFans(String userId, Long start, Long end) {
         Set<String> users=redisUtil.zRevRange(getFansKey(userId),start,end);
-        return ResponseVO.buildSuccess(getUserInfos(users));
+        return ResponseVO.buildSuccess(followHelper.getUserInfos(users));
     }
 
     @Override
@@ -87,27 +63,11 @@ public class FollowUserServiceImpl implements FollowUserService {
         return redisUtil.zIsMember(getFollowKey(userId),followerId);
     }
 
-    private Integer getFollowerCount(String userId){
+    public Integer getFollowerCount(String userId){
         return redisUtil.zcount(getFansKey(userId)).intValue();
     }
 
 
-    private List<FollowVO> getUserInfos(Set<String> userList){
-        List<FollowVO> userInfos=new ArrayList<>();
-        for(String userId:userList){
-            userInfos.add(getUserInfo(userId));
-        }
-        return userInfos;
-    }
-
-    private FollowVO getUserInfo(String userId){
-        FollowVO followVO=new FollowVO();
-        followVO.setFansCount(getFansCount(userId));
-        followVO.setFollowerCount(getFollowerCount(userId));
-        followVO.setLikeCount(likeService.userLikeCount(userId));
-        followVO.setQuestionCount(questionService.getQuestionCount(userId));
-        return followVO;
-    }
 
     private String getFollowKey(String userId){
         return FOLLOW_USER_KEY_PREDIX+userId;

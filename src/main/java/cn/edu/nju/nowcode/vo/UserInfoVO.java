@@ -3,7 +3,7 @@ package cn.edu.nju.nowcode.vo;
 /**
  * 关注的人或粉丝的基本信息
  */
-public class FollowVO {
+public class UserInfoVO {
 
     /**
      * 用户名称

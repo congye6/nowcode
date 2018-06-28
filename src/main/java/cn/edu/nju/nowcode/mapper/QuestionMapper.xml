@@ -30,7 +30,7 @@
     ORDER BY id DESC limit #{offset},#{limit}
   </select>
 
-  <select id="getQuestionCountByUser" resultType="int" parameterMap="java.lang.String">
+  <select id="getQuestionCountByUser" resultType="int" parameterType="java.lang.String">
     select count(id) from question where user_id=#{userId}
   </select>
 
