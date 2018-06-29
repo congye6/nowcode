@@ -22,6 +22,14 @@ public class RedisUtil {
     private RedisTemplate<String, String> redisTemplate;
 
 
+    public void persist(String key){
+        redisTemplate.persist(key);
+    }
+
+    public void expire(String key,Long time){
+        redisTemplate.expire(key,time,TimeUnit.SECONDS);
+    }
+
     /**
      * 将key对应的long值递增，如果不存在则置为0
      * @param key

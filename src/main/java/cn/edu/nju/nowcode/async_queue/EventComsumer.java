@@ -4,6 +4,7 @@ import cn.edu.nju.nowcode.enumeration.EventType;
 import cn.edu.nju.nowcode.util.RedisUtil;
 import cn.edu.nju.nowcode.vo.EventVO;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -19,6 +20,8 @@ import java.util.concurrent.Executors;
 
 @Service
 public class EventComsumer implements ApplicationContextAware {
+
+    private static final Logger LOGGER=Logger.getLogger(EventComsumer.class);
 
     private ApplicationContext applicationContext;
 
@@ -75,6 +78,7 @@ public class EventComsumer implements ApplicationContextAware {
         public void run() {
             while(true){
                 String eventJson=redisUtil.lget(EventProducer.EVENT_QUEUE_KEY);
+                LOGGER.info("get event:"+eventJson);
                 EventVO event=JSONObject.parseObject(eventJson,EventVO.class);
                 if(event==null||event.getEventType()==null)//无效的event
                     continue;
