@@ -1,8 +1,11 @@
 package cn.edu.nju.nowcode.service.impl;
 
+import cn.edu.nju.nowcode.async_queue.EventProducer;
+import cn.edu.nju.nowcode.enumeration.EventType;
 import cn.edu.nju.nowcode.service.FollowQuestionService;
 import cn.edu.nju.nowcode.service.QuestionService;
 import cn.edu.nju.nowcode.util.RedisUtil;
+import cn.edu.nju.nowcode.vo.EventVO;
 import cn.edu.nju.nowcode.vo.QuestionVO;
 import cn.edu.nju.nowcode.vo.ResponseVO;
 import org.apache.log4j.Logger;
@@ -35,9 +38,15 @@ public class FollowQuestionServiceImpl implements FollowQuestionService{
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @Override
     public ResponseVO follow(String userId, Long questionId) {
-        return followHelper.follow(userId,questionId+"",getFollowKey(userId),getFansKey(questionId));
+        ResponseVO responseVO=followHelper.follow(userId,questionId+"",getFollowKey(userId),getFansKey(questionId));
+        if(responseVO.getSuccess())
+            eventProducer.produce(new EventVO(EventType.FOLLOW_QUESTION,userId,null,questionId,null));
+        return responseVO;
     }
 
     @Override

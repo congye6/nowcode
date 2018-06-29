@@ -20,6 +20,15 @@ public class MessageVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public MessageVO() {
+    }
+
+    public MessageVO(String fromId, String toId, String content) {
+        this.fromId = fromId;
+        this.toId = toId;
+        this.content = content;
+    }
+
     public Long getId() {
         return id;
     }
