@@ -64,7 +64,7 @@ public class FollowUserServiceImpl implements FollowUserService {
     }
 
     public Integer getFollowerCount(String userId){
-        return redisUtil.zcount(getFansKey(userId)).intValue();
+        return redisUtil.zcount(getFollowKey(userId)).intValue();
     }
 
 

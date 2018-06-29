@@ -60,6 +60,7 @@ public class UserServiceImpl implements UserService{
         followVO.setFollowerCount(followUserService.getFollowerCount(userId));
         followVO.setLikeCount(likeService.userLikeCount(userId));
         followVO.setQuestionCount(questionService.getQuestionCount(userId));
+        followVO.setUserId(userId);
         return followVO;
     }
 }

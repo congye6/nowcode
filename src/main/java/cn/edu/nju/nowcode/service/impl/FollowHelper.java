@@ -41,8 +41,9 @@ public class FollowHelper {
             redisUtil.startTransaction();
             redisUtil.zsadd(followKey,followerId,new Date().getTime()+0.0);
             redisUtil.zsadd(fansKey,userId,new Date().getTime()+0.0);
-            boolean result=redisUtil.commitTransaction();
-            if(!result)
+            List<Object> result=redisUtil.commitTransaction();
+            boolean success=result.size()==2&&(Boolean)result.get(0)&&(Boolean)result.get(1);
+            if(!success)
                 return ResponseVO.buildFailure("关注失败，请确认是否已经关注");
         }catch (Exception e){
             LOGGER.error("关注失败",e);
@@ -64,8 +65,9 @@ public class FollowHelper {
             redisUtil.startTransaction();
             redisUtil.zremove(followKey,followerId);
             redisUtil.zremove(fansKey,userId);
-            boolean result=redisUtil.commitTransaction();
-            if(!result)
+            List<Object> result=redisUtil.commitTransaction();
+            boolean success=result.size()==2&&(Long)result.get(0)>=0&&(Long)result.get(1)>=0;
+            if(!success)
                 return ResponseVO.buildFailure("取消关注失败，请重试");
         }catch (Exception e){
             LOGGER.error("取消关注失败",e);
