@@ -22,6 +22,14 @@ public class RedisUtil {
     private RedisTemplate<String, String> redisTemplate;
 
 
+    public void persist(String key){
+        redisTemplate.persist(key);
+    }
+
+    public void expire(String key,Long time){
+        redisTemplate.expire(key,time,TimeUnit.SECONDS);
+    }
+
     /**
      * 将key对应的long值递增，如果不存在则置为0
      * @param key
@@ -55,7 +63,7 @@ public class RedisUtil {
      * @param value
      */
     public void set(String key,Object value){
-        redisTemplate.opsForValue().set(key, JSONObject.toJSONString(value));
+        redisTemplate.opsForValue().set(key, toJsonString(value));
     }
 
     /**
@@ -64,7 +72,7 @@ public class RedisUtil {
      * @param value
      */
     public void set(String key,Object value,long expireSencond){
-        redisTemplate.opsForValue().set(key, JSONObject.toJSONString(value),expireSencond, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(key, toJsonString(value),expireSencond, TimeUnit.SECONDS);
     }
 
     /**
@@ -87,11 +95,11 @@ public class RedisUtil {
     }
 
     public void sadd(String key,Object value){
-        redisTemplate.opsForSet().add(key,JSONObject.toJSONString(value));
+        redisTemplate.opsForSet().add(key,toJsonString(value));
     }
 
     public boolean isMember(String key,Object value){
-        return redisTemplate.opsForSet().isMember(key,JSONObject.toJSONString(value));
+        return redisTemplate.opsForSet().isMember(key,toJsonString(value));
     }
 
     public Long scount(String key){
@@ -99,14 +107,14 @@ public class RedisUtil {
     }
 
     public void sremove(String key,String value){
-        redisTemplate.opsForSet().remove(key,JSONObject.toJSONString(value));
+        redisTemplate.opsForSet().remove(key,value);
     }
 
     /**
      * 有序集合
      */
     public void zsadd(String key,Object value,Double score){
-        redisTemplate.opsForZSet().add(key,JSONObject.toJSONString(value),score);
+        redisTemplate.opsForZSet().add(key,toJsonString(value),score);
     }
 
     public Set<String> zRevRange(String key,Long start,Long end){
@@ -114,7 +122,7 @@ public class RedisUtil {
     }
 
     public void zremove(String key,Object value){
-        redisTemplate.opsForZSet().remove(key,JSONObject.toJSONString(value));
+        redisTemplate.opsForZSet().remove(key,toJsonString(value));
     }
 
     public Long zcount(String key){
@@ -122,7 +130,7 @@ public class RedisUtil {
     }
 
     public boolean zIsMember(String key,Object value){
-        return redisTemplate.opsForZSet().rank(key,JSONObject.toJSONString(value))!=null;
+        return redisTemplate.opsForZSet().rank(key,toJsonString(value))!=null;
     }
 
 
@@ -130,12 +138,7 @@ public class RedisUtil {
      * list操作
      */
     public void ladd(String key,Object value){
-        String json=null;
-        if(!(value instanceof String))
-            json=JSONObject.toJSONString(value);
-        else
-            json=(String)value;
-        redisTemplate.opsForList().leftPush(key,json);
+        redisTemplate.opsForList().leftPush(key,toJsonString(value));
     }
 
     public String lget(String key){
@@ -154,7 +157,7 @@ public class RedisUtil {
      * map
      */
     public void madd(String mapKey,String key,Object value){
-        redisTemplate.opsForHash().put(mapKey,key,JSONObject.toJSONString(value));
+        redisTemplate.opsForHash().put(mapKey,key,toJsonString(value));
     }
 
     public Object mget(String mapKey,String key){
@@ -169,13 +172,14 @@ public class RedisUtil {
         redisTemplate.multi();
     }
 
-    public boolean commitTransaction(){
-        List<Object> result=redisTemplate.exec();
-        if(result.size()!=2)
-            return false;
-        return (Boolean)result.get(0)&&(Boolean)result.get(1);
+    public List<Object> commitTransaction(){
+        return redisTemplate.exec();
     }
 
-
+    private String toJsonString(Object o){
+        if(o instanceof String)
+            return (String)o;
+        return JSONObject.toJSONString(o);
+    }
 
 }

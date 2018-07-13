@@ -34,12 +34,13 @@ public class RedisUtilTester {
 
     @Test
     public void testList(){
-        redisUtil.ladd("list","niupi");
-        redisUtil.ladd("list","niupi2");
-        redisUtil.ladd("list","niupi3");
-        System.out.println(redisUtil.lget("list"));
-        System.out.println(redisUtil.lget("list"));
-        System.out.println(redisUtil.lget("list"));
+//        redisUtil.ladd("list","niupi");
+//        redisUtil.ladd("list","niupi2");
+//        redisUtil.ladd("list","niupi3");
+//        System.out.println(redisUtil.lget("list"));
+//        System.out.println(redisUtil.lget("list"));
+//        System.out.println(redisUtil.lget("list"));
+        System.out.println(redisUtil.lget("nowcode_event_queue"));
     }
 
     @Test
@@ -70,6 +71,12 @@ public class RedisUtilTester {
         System.out.println(redisUtil.get(key));
         redisUtil.desc(key);
         System.out.println(redisUtil.get(key));
+    }
+
+    @Test
+    public void testExpire(){
+        String key="nowcode_event_queue_2";
+        redisUtil.persist(key);
     }
 
 

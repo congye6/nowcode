@@ -2,7 +2,9 @@ package cn.edu.nju.nowcode.enumeration;
 
 public enum EventType {
 
-    LIKE,DISLIKE,COMMENT,SEND_MESSAGE,LOGIN,QUESTION
+
+    LIKE,DISLIKE,COMMENT,SEND_MESSAGE,LOGIN,FOLLOW,FOLLOW_QUESTION,QUESTION
+
 
 
 }

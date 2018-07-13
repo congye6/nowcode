@@ -28,7 +28,7 @@ public class FollowQuestionController {
         return followQuestionService.follow(userId,questionId);
     }
 
-    @RequestMapping(value = "/follow/cancel/user/{questionId}",method = RequestMethod.POST)
+    @RequestMapping(value = "/follow/cancel/question/{questionId}",method = RequestMethod.POST)
     public ResponseVO unfollow(@PathVariable Long questionId){
         String userId=userContext.getUser().getUsername();
         return followQuestionService.unfollow(userId,questionId);

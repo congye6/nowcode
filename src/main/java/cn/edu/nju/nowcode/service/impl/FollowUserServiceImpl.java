@@ -1,10 +1,13 @@
 package cn.edu.nju.nowcode.service.impl;
 
+import cn.edu.nju.nowcode.async_queue.EventProducer;
+import cn.edu.nju.nowcode.enumeration.EventType;
 import cn.edu.nju.nowcode.service.FollowUserService;
 import cn.edu.nju.nowcode.service.LikeService;
 import cn.edu.nju.nowcode.service.QuestionService;
 import cn.edu.nju.nowcode.service.UserService;
 import cn.edu.nju.nowcode.util.RedisUtil;
+import cn.edu.nju.nowcode.vo.EventVO;
 import cn.edu.nju.nowcode.vo.UserInfoVO;
 import cn.edu.nju.nowcode.vo.ResponseVO;
 import org.apache.log4j.Logger;
@@ -31,9 +34,15 @@ public class FollowUserServiceImpl implements FollowUserService {
     @Autowired
     private RedisUtil redisUtil;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @Override
     public ResponseVO follow(String userId, String followerId) {
-        return followHelper.follow(userId,followerId,getFollowKey(userId),getFansKey(followerId));
+        ResponseVO response=followHelper.follow(userId,followerId,getFollowKey(userId),getFansKey(followerId));
+        if(response.getSuccess())
+            eventProducer.produce(new EventVO(EventType.FOLLOW,userId,null,null,followerId));
+        return response;
     }
 
     @Override
@@ -64,7 +73,7 @@ public class FollowUserServiceImpl implements FollowUserService {
     }
 
     public Integer getFollowerCount(String userId){
-        return redisUtil.zcount(getFansKey(userId)).intValue();
+        return redisUtil.zcount(getFollowKey(userId)).intValue();
     }
 
 
