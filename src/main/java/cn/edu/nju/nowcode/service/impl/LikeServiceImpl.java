@@ -57,7 +57,10 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public Integer userLikeCount(String userId) {
-        return Integer.valueOf(redisUtil.get(USER_LIKE_COUNT_KEY+userId));
+        String likeCount=redisUtil.get(USER_LIKE_COUNT_KEY+userId);
+        if(StringUtils.isEmpty(likeCount))
+            return 0;
+        return Integer.valueOf(likeCount);
     }
 
     private String getKey(LikeVO likeVO){

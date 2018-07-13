@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserInfoVO getUserInfo(String userId) {
         UserInfoVO followVO=new UserInfoVO();
+        followVO.setUserId(userId);
         followVO.setFansCount(followUserService.getFansCount(userId));
         followVO.setFollowerCount(followUserService.getFollowerCount(userId));
         followVO.setLikeCount(likeService.userLikeCount(userId));
